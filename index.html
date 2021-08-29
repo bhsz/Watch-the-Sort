@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="favicon.png" type="image/png" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Watch the Sort!</title>
+	</head>
+	<body>
+		<main>
+			<div id="settings">
+				<ul>
+					<li>
+						<p>Size (<span id="array-size-val"></span>)</p>
+						<input type="range" id="array-size" min="30" max="100" />
+					</li>
+					<li>
+						<p>Speed (<span id="sort-speed-val"></span>)</p>
+						<input type="range" id="sort-speed" min="0" max="4" />
+					</li>
+					<li>
+						<p>Algorithm</p>
+						<select id="algo-select">
+							<option value="bubble-sort">Bubble Sort</option>
+							<option value="insertion-sort">Insertion Sort</option>
+							<option value="selection-sort">Selection Sort</option>
+						</select>
+					</li>
+					<li>
+						<button id="sort-btn">Watch the Sort!</button>
+					</li>
+					<li>
+						<button id="reset-btn">Reset</button>
+					</li>
+				</ul>
+			</div>
+			<div id="array-container"></div>
+		</main>
+		<script src="/javascript/algorithms.js"></script>
+		<script src="/javascript/utils.js"></script>
+		<script src="/javascript/index.js"></script>
+	</body>
+</html>
