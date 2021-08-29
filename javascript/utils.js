@@ -13,7 +13,7 @@ const SORT_SPEED_STRING = {
 };
 
 const SORT_SPEED_DELAY = {
-	0: 200,
+	0: 250,
 	1: 100,
 	2: 50,
 	3: 25,

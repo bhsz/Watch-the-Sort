@@ -118,6 +118,89 @@ const selectionSort = async (arr, delay) => {
 	}
 };
 
+//  __  __                    ___          _
+// |  \/  |___ _ _ __ _ ___  / __| ___ _ _| |_
+// | |\/| / -_) '_/ _` / -_) \__ \/ _ \ '_|  _|
+// |_|  |_\___|_| \__, \___| |___/\___/_|  \__|
+// 							 |___/
+// ***********************************(Inplace)
+
+// Proper version
+// const mergeSort = (arr, l, r) => {
+// 	if (l >= r) {
+// 		return;
+// 	}
+
+// 	let m = Math.floor((l + r) / 2);
+// 	mergeSort(arr, l, m, delay);
+// 	mergeSort(arr, m + 1, r, delay);
+// 	merge(arr, l, m, r, delay);
+// };
+
+// const merge = (arr, l, m, r) => {
+// 	let p1 = l;
+// 	let p2 = m + 1;
+
+// 	while (p1 <= m && p2 <= r) {
+// 		if (arr[p1] <= arr[p2]) {
+// 			p1++;
+// 		} else {
+// 			let index = p2;
+// 			while (index > p1) {
+// 				swap(arr[index], arr[index - 1]);
+// 				index--;
+// 			}
+// 			p1++;
+// 			m++;
+// 			p2++;
+// 		}
+// 	}
+// };
+
+// For visualisation
+const mergeSortWrapper = async (arr, delay) => {
+	await mergeSort(arr, 0, arr.length - 1, delay);
+};
+
+const mergeSort = async (arr, l, r, delay) => {
+	if (l >= r) {
+		return;
+	}
+
+	let m = Math.floor((l + r) / 2);
+	await mergeSort(arr, l, m, delay);
+	await mergeSort(arr, m + 1, r, delay);
+	await merge(arr, l, m, r, delay);
+};
+
+const merge = async (arr, l, m, r, delay) => {
+	let p1 = l;
+	let p2 = m + 1;
+
+	while (p1 <= m && p2 <= r) {
+		setBgColor(arr[p1], SECONDARY_COLOR);
+		setBgColor(arr[p2], SECONDARY_COLOR);
+
+		await sleep(delay);
+
+		if (elemHeight(arr[p1]) <= elemHeight(arr[p2])) {
+			p1++;
+			setBgColor(arr[p2], PRIMARY_COLOR);
+		} else {
+			let index = p2;
+			while (index > p1) {
+				swapHeight(arr[index], arr[index - 1]);
+				index--;
+			}
+			p1++;
+			m++;
+			setBgColor(arr[p2], PRIMARY_COLOR);
+			p2++;
+		}
+		setBgColor(arr[p1 - 1], PRIMARY_COLOR);
+	}
+};
+
 //     _                     __  __
 //    /_\  __ __ ___ ______ |  \/  |__ _ _ __
 //   / _ \/ _/ _/ -_|_-<_-< | |\/| / _` | '_ \
@@ -129,4 +212,5 @@ const algorithms = {
 	"bubble-sort": bubbleSort,
 	"insertion-sort": insertionSort,
 	"selection-sort": selectionSort,
+	"merge-sort": mergeSortWrapper,
 };
