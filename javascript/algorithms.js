@@ -201,6 +201,100 @@ const merge = async (arr, l, m, r, delay) => {
 	}
 };
 
+//   ___       _    _     ___          _
+//  / _ \ _  _(_)__| |__ / __| ___ _ _| |_
+// | (_) | || | / _| / / \__ \/ _ \ '_|  _|
+//  \__\_\\_,_|_\__|_\_\ |___/\___/_|  \__|
+// ****************************************
+
+// Proper version
+// const quicksort = (arr, l, r) => {
+// 	if (l >= r) {
+// 		return;
+// 	}
+
+// 	let pivotIndex = partition(arr, l, r);
+// 	quicksort(arr, pivotIndex + 1, r);
+// 	quicksort(arr, l, pivotIndex - 1);
+// };
+
+// const partition = (arr, l, r) => {
+// 	const pivot = arr[r];
+
+// 	// 2 iterators technique
+// 	let lessThan = l;
+// 	for (var i = l; i < r; i++) {
+// 		if (arr[i] <= pivot) {
+// 			swap(arr[lessThan++], arr[i]);
+// 		}
+// 	}
+
+// 	swap(arr[lessThan], arr[r]);
+// 	return lessThan;
+// };
+
+// For visualisation
+const quicksortWrapper = async (arr, delay) => {
+	await quicksort(arr, 0, arr.length - 1, delay);
+};
+
+const quicksort = async (arr, l, r, delay) => {
+	// Single bar is sorted
+	if (l >= r) {
+		let index = Math.max(Math.min(l, r), 0);
+		setBgColor(arr[index], SUCCESS_COLOR);
+		return;
+	}
+
+	// Partition and quicksort on each side
+	let pivotIndex = await partition(arr, l, r, delay);
+	await quicksort(arr, l, pivotIndex - 1, delay);
+	await quicksort(arr, pivotIndex + 1, r, delay);
+};
+
+const partition = async (arr, l, r, delay) => {
+	// Visualisation for range of partition
+	setBgColor(arr[l], SECONDARY_COLOR);
+	setBgColor(arr[r], SECONDARY_COLOR);
+	await sleep(delay);
+
+	// Select pivot as last element of range
+	const pivot = elemHeight(arr[r]);
+	// Initialise smallest element index
+	let lessThan = l;
+	showHere(arr[lessThan]);
+
+	for (var i = l; i < r; i++) {
+		// Visualisation for current bar
+		setBgColor(arr[i], THIRD_COLOR);
+		await sleep(delay);
+
+		// If current bar smaller than pivot, swap and update smallest index
+		if (elemHeight(arr[i]) <= pivot) {
+			hideHere(arr[lessThan]);
+			swapHeight(arr[lessThan++], arr[i]);
+			showHere(arr[lessThan]);
+		}
+
+		// Reset colour of current bar (If left bound, set to red)
+		setBgColor(arr[i], i == l ? SECONDARY_COLOR : PRIMARY_COLOR);
+	}
+
+	// Swap pivot to correct position
+	await sleep(delay);
+	swapHeight(arr[lessThan], arr[r]);
+	hideHere(arr[lessThan]);
+	setBgColor(arr[lessThan], SUCCESS_COLOR);
+
+	// If the correct position is not right bound, reset to primary color
+	await sleep(delay);
+	if (r != lessThan) {
+		setBgColor(arr[r], PRIMARY_COLOR);
+	}
+
+	return lessThan;
+};
+
 //     _                     __  __
 //    /_\  __ __ ___ ______ |  \/  |__ _ _ __
 //   / _ \/ _/ _/ -_|_-<_-< | |\/| / _` | '_ \
@@ -213,4 +307,5 @@ const algorithms = {
 	"insertion-sort": insertionSort,
 	"selection-sort": selectionSort,
 	"merge-sort": mergeSortWrapper,
+	"quick-sort": quicksortWrapper,
 };

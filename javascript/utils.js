@@ -13,7 +13,7 @@ const SORT_SPEED_STRING = {
 };
 
 const SORT_SPEED_DELAY = {
-	0: 250,
+	0: 500,
 	1: 100,
 	2: 50,
 	3: 25,
@@ -52,6 +52,7 @@ const buildBars = (size) => {
 
 	for (var i = 0; i < arr.length; i++) {
 		let bar = document.createElement("div");
+		bar.innerHTML = "▼";
 		bar.classList.add("bar");
 		bar.style.width = `${barWidth}px`;
 		bar.style.height = `${arr[i]}px`;
@@ -84,4 +85,12 @@ const elemHeight = (element) => {
 
 const setBgColor = (element, color) => {
 	element.style.backgroundColor = color;
+};
+
+const showHere = (element) => {
+	element.style.color = "black";
+};
+
+const hideHere = (element) => {
+	element.style.color = "transparent";
 };
